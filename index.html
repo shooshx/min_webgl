@@ -107,8 +107,8 @@ function start() {
     document.onmousemove = function(e) {
         if (!mousePressed)
             return
-        mat4.rotateY(rotMat, (lastX - event.clientX) / 200)
-        mat4.rotateX(rotMat, (lastY - event.clientY) / 200)
+        mat4.rotateY(rotMat, (event.clientX - lastX) / 200)
+        mat4.rotateX(rotMat, (event.clientY - lastY) / 200)
         lastX = event.clientX
         lastY = event.clientY
     }
