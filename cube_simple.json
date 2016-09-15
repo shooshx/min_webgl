@@ -1,0 +1,13 @@
+var mesh {
+ "vertexPositions" : 
+    [ 1.0, -1.0, -1.0,    // vertex 0
+     -1.0,  1.0, -1.0,    // vertex 1
+     -1.0, -1.0,  1.0,    // vertex 2
+      1.0,  1.0,  1.0 ],  // vertex 3
+ "triangles" : 
+    [1, 2, 3,
+     0, 2, 1,
+     3, 2, 0,
+     0, 1, 3]
+     
+}
