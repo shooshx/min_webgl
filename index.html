@@ -30,6 +30,7 @@
 
 <script type="text/javascript" src="glMatrix-0.9.4.min.js"></script>
 <script type="text/javascript" src="cube_simple.json"></script>
+<script type="text/javascript" src="cube.json"></script>
 <script type="text/javascript">
     
 var gl = null, canvas = null
@@ -70,26 +71,8 @@ function start() {
     prog.uPMat = gl.getUniformLocation(prog, "uPMatrix");
     gl.useProgram(prog)
     
-    // create model
-    var vtxData = new Float32Array(cube.vertexPositions) //new Float32Array([0,0,0, 0.5,0,0, 0.5,0.5,0])
-    model.vtxBuf = gl.createBuffer()
-    gl.bindBuffer(gl.ARRAY_BUFFER, model.vtxBuf)
-    gl.bufferData(gl.ARRAY_BUFFER, vtxData, gl.STATIC_DRAW);
-    model.vtxBuf.numItems = vtxData.length / 3
-    
-    var normalData = new Float32Array(cube.vertexNormals) 
-    model.normBuf = gl.createBuffer()
-    gl.bindBuffer(gl.ARRAY_BUFFER, model.normBuf)
-    gl.bufferData(gl.ARRAY_BUFFER, normalData, gl.STATIC_DRAW);
-    model.normBuf.numItems = normalData.length / 3
-    
-    var iData = new Uint16Array(cube.triangles)
-    model.indices = gl.createBuffer()
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, model.indices);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, iData, gl.STATIC_DRAW);
-    model.indices.numItems = iData.length
-    model.indices.type = gl.UNSIGNED_SHORT
-    
+    loadModel(simple_cube)
+
     // init user input
     rotMat = mat4.create()
     mat4.identity(rotMat)
@@ -117,12 +100,38 @@ function start() {
     requestAnimationFrame(draw)
 }
 
+function loadModel(cube)
+{
+    // create model
+    var vtxData = new Float32Array(cube.vertexPositions) //new Float32Array([0,0,0, 0.5,0,0, 0.5,0.5,0])
+    model.vtxBuf = gl.createBuffer()
+    gl.bindBuffer(gl.ARRAY_BUFFER, model.vtxBuf)
+    gl.bufferData(gl.ARRAY_BUFFER, vtxData, gl.STATIC_DRAW);
+    model.vtxBuf.numItems = vtxData.length / 3
+    
+    var normalData = new Float32Array(cube.vertexNormals) 
+    model.normBuf = gl.createBuffer()
+    gl.bindBuffer(gl.ARRAY_BUFFER, model.normBuf)
+    gl.bufferData(gl.ARRAY_BUFFER, normalData, gl.STATIC_DRAW);
+    model.normBuf.numItems = normalData.length / 3
+    
+    var iData = new Uint16Array(cube.triangles)
+    model.indices = gl.createBuffer()
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, model.indices);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, iData, gl.STATIC_DRAW);
+    model.indices.numItems = iData.length
+    model.indices.type = gl.UNSIGNED_SHORT    
+
+}
+
+
 var camera = { eye: [0,1,5], toPoint: [0,0,0], upDir: [0,1,0] }
 var rotMat = null
 
 
 
-function draw() {
+function draw() 
+{
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     
@@ -150,11 +159,19 @@ function draw() {
     requestAnimationFrame(draw)
 }
 
+function triggerSimple() {
+    if (usesimple.checked)    
+        loadModel(simple_cube)
+    else
+        loadModel(cube)
+}
+
 </script>
 
 
 </head>
 <body onload="start();">
+    <input id="usesimple" type="checkbox" oninput="triggerSwap()"/>Swap model
     <canvas id="canvas" width="900" height="650"></canvas>
 </body>
 </html>
