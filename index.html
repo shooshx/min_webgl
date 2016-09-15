@@ -29,7 +29,6 @@
 </script>
 
 <script type="text/javascript" src="glMatrix-0.9.4.min.js"></script>
-<script type="text/javascript" src="cube_simple.json"></script>
 <script type="text/javascript" src="cube.json"></script>
 <script type="text/javascript">
     
@@ -99,6 +98,24 @@ function start() {
     // start drawing
     requestAnimationFrame(draw)
 }
+
+simple_cube = {
+     "vertexPositions" : 
+        [ 1.0, -1.0,  0.0,    
+         -1.0,  1.0,  0.0,    
+         -1.0, -1.0,  0.0,    
+          1.0,  1.0,  0.0 ],  
+     "vertexNormals": 
+        [ 0, 0, 1.0,
+          0, 0, 1.0,
+          0, 0, 1.0,
+           0, 0, 1.0,
+        ],     
+     "triangles" : 
+        [1, 2, 3,
+         3, 2, 0]
+}
+
 
 function loadModel(cube)
 {
